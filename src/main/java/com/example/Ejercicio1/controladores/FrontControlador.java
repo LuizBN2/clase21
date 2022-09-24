@@ -1,6 +1,7 @@
 package com.example.Ejercicio1.controladores;
 
 import com.example.Ejercicio1.entidades.Paciente;
+import com.example.Ejercicio1.entidades.Profesional;
 import com.example.Ejercicio1.entidades.Usuario;
 import com.example.Ejercicio1.servicios.ServiciosPacientes;
 import com.example.Ejercicio1.servicios.ServiciosProfesionales;
@@ -20,10 +21,13 @@ public class FrontControlador {
     ServiciosPacientes servicesP;
     ServiciosUsuarios serviceUs;
 
+    ServiciosProfesionales servicesProf;
 
-    public FrontControlador(ServiciosPacientes servicesP, ServiciosUsuarios serviceUs){
+
+    public FrontControlador(ServiciosPacientes servicesP, ServiciosUsuarios serviceUs, ServiciosProfesionales servicesProf){
         this.servicesP = servicesP;
         this.serviceUs = serviceUs;
+        this.servicesProf = servicesProf;
     }
 
     //crea elementos de tipo String para visualizar las etiquetas HTML creadas
@@ -66,11 +70,31 @@ public class FrontControlador {
         return "actualizar-paciente";
     }
 
+    @GetMapping("/interface")
+    public String interfaces(){
+        return "interface";
+    }
 
-    //aquí hago uso de los servicios de usuarios
+    @GetMapping("/profesionales")
+    public String profesionales(Model model){
+        List<Profesional> profesionales = this.servicesProf.getListaProfesionales();
+        model.addAttribute("profesionales", profesionales);
+        return "profesionales";
 
+    }
 
+    @GetMapping("/profesionales/{id}")
+    public String actualizarProfesionales(@PathVariable Long id, Model model){
+        Profesional profesionalFind = this.servicesProf.getLlamarProfesional(id);
+        model.addAttribute("profesionalFind", profesionalFind);
+        return "actualizar-profesional";
+    }
 
+    @GetMapping("/profesionales/nuevo")
+    public String nuevoProfesional(Model model){
+        model.addAttribute("profesional", new Profesional());
+        return "nuevo-profesional";
+    }
 
 
 }

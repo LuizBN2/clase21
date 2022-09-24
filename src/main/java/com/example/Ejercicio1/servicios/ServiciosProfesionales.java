@@ -7,6 +7,8 @@ import com.example.Ejercicio1.repositorios.repositorioPacientes;
 import com.example.Ejercicio1.repositorios.repositorioProfesionales;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ServiciosProfesionales {
 
@@ -61,7 +63,12 @@ public class ServiciosProfesionales {
         return profActual;
     }
 
+    public List<Profesional> getListaProfesionales(){
+        return this.repositorioProf.findAll();
+    }
 
-
+    public Profesional getLlamarProfesional(Long id){
+        return this.repositorioProf.findById(id).orElseThrow();
+    }
 
 }
