@@ -12,5 +12,4 @@ public class SecurityConfig {
         return http.oauth2Login()
                 .and().build();
     }
-
 }
